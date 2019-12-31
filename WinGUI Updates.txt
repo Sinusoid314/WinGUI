@@ -1,0 +1,72 @@
+[v1.03]
+
+(December 23, 2019)
+	- Added a name property to CSpriteFrameSheet.
+
+(December 19, 2019)
+	- Added CWindow::SetClientSize().
+
+(December 17, 2019)
+	- Modified CSprite::Draw(), renaming viewLeft/viewTop to offsetLeft/offsetTop, and
+	  changing them from subtractions to additions.
+
+(July 27, 2019)
+	- Moved velocity and collision code from CSprite in WinGUI library to CSpriteEx in Game2D.
+	
+(July 7, 2019)
+	- Removed CSprite's dependency on GetTickCount() for frame timing, instead advancing
+	  frames based on the number of times a frame has been drawn.
+	  
+(June 26, 2019)
+	- Edited CDrawBox::SetupDrawData() to create the redraw DC to the size of the screen.
+	- Deleted WM_SIZE handler from DrawBoxProc().
+	- Deleted autoResizeRedrawDC from CDrawBox.
+	
+(June 13, 2019)
+	- Renamed CDrawBox::UpdateRedrawSize() to CDrawBox::ResizeRedrawDC() and striped it down
+	  to change the size of redrawDC based only on the function arguments.
+
+(June 11, 2019)
+	- Added autoResizeRedrawDC to decide whether or not UpdateRedrawSize() gets called when
+	  a DrawBox gets the WM_SIZE message.
+	- Modified MainWinProc(), ModalWinProc(), and DrawBoxProc() to call DefWindowProc() only
+	  when a message is not handled, except for WM_NCCREATE and WM_NCDESTROY.
+	- Modified MainWinProc(), ModalWinProc(), and DrawBoxProc() to return FALSE on WM_NCCREATE
+	  if an object pointer is not provided.
+
+(May 2, 2019)
+	- Edited FlushWinEvents() to return once a WM_QUIT message is received.
+	- Added CSprite::CollidesWith().
+
+(April 19, 2019)
+	- Added a constructor to CSprite that loads an initial CSpriteFrameSheet.
+
+(April 17, 2019)
+	- Decoupled all graphics and frame-size code/data from CSprite and put it into CSpriteFrameSheet.
+
+(April 8, 2019)
+	- Edited CImage to replace the current image, if any, when loading a new image.
+
+
+[v1.02]
+
+(March 12, 2019)
+	- Edited CWindow::GetEventIndex() to use (unsigned int) for the winEventList loop index.
+	- Edited CDrawBox::UpdateRedrawSize() to set redrawDefFont to newDefFont.
+	- Edited CEditBox::GetLineLen() to return a value.
+	- Edited CEditBox::GetLinePos() to return a value.
+	- Edited CEditBox::GetLineCount() to return a value.
+	- Edited CSprite::AddFrame() to return a value.
+	- Edited CListBox::SetItemText() to return true if successful.
+	- Edited CComboBox::SetItemText() to return true if successful.
+	- Edited CImage::LoadFromFile() to return true if successful.
+	- Edited CImage::LoadFromResource() to return true if successful.
+
+(February 26, 2019)
+	- Added GetStyle() and SetStyle() to CWindow to set and get the window style.
+
+(January 25, 2019)
+	- Added userData member to CSprite class, to allow extended functionality.
+	- Renamed speedX to velocityX and speedY to velocityY.
+	- Moved the application of velocityX and velocityY from CSprite::Draw()
+	  to the new CSprite::ApplyVelocity() function.
