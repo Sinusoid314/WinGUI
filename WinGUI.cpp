@@ -657,7 +657,7 @@ void CWindow::SetClientSize(int clientWidth, int clientHeight)
 {
     RECT winRect = {0, 0, clientWidth, clientHeight};
 
-    AdjustWindowRectEx(&winRect, GetWindowStyle(winHandle), FALSE, GetWindowExStyle(winHandle));
+    AdjustWindowRectEx(&winRect, GetStyle(), FALSE, GetStyleEx());
     SetSize(winRect.right - winRect.left, winRect.bottom - winRect.top);
 }
 
@@ -667,10 +667,22 @@ LONG CWindow::GetStyle(void)
     return GetWindowLongA(winHandle, GWL_STYLE);
 }
 
+LONG CWindow::GetStyleEx(void)
+//
+{
+    return GetWindowLongA(winHandle, GWL_EXSTYLE);
+}
+
 LONG CWindow::SetStyle(LONG newStyle)
 //
 {
     return SetWindowLong(winHandle, GWL_STYLE, newStyle);
+}
+
+LONG CWindow::SetStyleEx(LONG newStyle)
+//
+{
+    return SetWindowLong(winHandle, GWL_EXSTYLE, newStyle);
 }
 
 CWindow* CWindow::GetParentWin(void)

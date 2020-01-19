@@ -107,7 +107,9 @@ class CWindow
     void SetSize(int, int);
     void SetClientSize(int, int);
     LONG GetStyle(void);
+    LONG GetStyleEx(void);
     LONG SetStyle(LONG);
+    LONG SetStyleEx(LONG);
     CWindow* GetParentWin(void);
     void SetParentWin(CWindow*);
     virtual void GetFontInfo(LOGFONT*);

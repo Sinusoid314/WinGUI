@@ -1,5 +1,8 @@
 [v1.03]
 
+(January 18, 2020)
+	- Added CWindow::GetStyleEx() and CWindow::SetStyleEx().
+
 (December 23, 2019)
 	- Added a name property to CSpriteFrameSheet.
 
