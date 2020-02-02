@@ -1,5 +1,8 @@
 [v1.03]
 
+(February 1, 2020)
+	- Added a property to CImage and CSpriteSheet that holds the file names of their images.
+
 (January 18, 2020)
 	- Added CWindow::GetStyleEx() and CWindow::SetStyleEx().
 
