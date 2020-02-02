@@ -384,6 +384,7 @@ class CImage
   public:
 
     std::string imgName;
+    std::string imgFileName;
     HBITMAP imgHandle;
 	unsigned int imgWidth;
 	unsigned int imgHeight;
@@ -405,6 +406,7 @@ class CSpriteFrameSheet
   public:
 
     std::string sheetName;
+    std::string sheetFileName;
     HBITMAP* frameBMPList;
     HBITMAP* maskBMPList;
     unsigned int frameCount;

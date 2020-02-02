@@ -2108,22 +2108,23 @@ CImage::~CImage(void)
 	Unload();
 }
 
-bool CImage::Load(const char* imgFileName, bool loadFromResource)
+bool CImage::Load(const char* newImgFileName, bool loadFromResource)
 //Load an image handle from a file or resource
 {
     HBITMAP newImgHandle;
     BITMAP imgInfo;
 
     if(loadFromResource)
-        newImgHandle = (HBITMAP) LoadImage(GetModuleHandle(NULL), imgFileName, IMAGE_BITMAP, 0, 0, LR_DEFAULTCOLOR);
+        newImgHandle = (HBITMAP) LoadImage(GetModuleHandle(NULL), newImgFileName, IMAGE_BITMAP, 0, 0, LR_DEFAULTCOLOR);
     else
-        newImgHandle = (HBITMAP) LoadImage(NULL, imgFileName, IMAGE_BITMAP, 0, 0, LR_LOADFROMFILE);
+        newImgHandle = (HBITMAP) LoadImage(NULL, newImgFileName, IMAGE_BITMAP, 0, 0, LR_LOADFROMFILE);
 
     if(newImgHandle == NULL)
         return false;
 
     Unload();
 
+    imgFileName = newImgFileName;
     imgHandle = newImgHandle;
     GetObject(imgHandle, sizeof(imgInfo), &imgInfo);
     imgWidth = imgInfo.bmWidth;
@@ -2147,6 +2148,7 @@ void CImage::Init(void)
 //Initialize image object properties
 {
     imgName = "";
+    imgFileName = "";
     imgHandle = NULL;
     imgWidth = 0;
     imgHeight = 0;
@@ -2171,7 +2173,7 @@ CSpriteFrameSheet::~CSpriteFrameSheet(void)
     Unload();
 }
 
-bool CSpriteFrameSheet::Load(const char* sheetFileName, COLORREF maskColor, unsigned int frameRows, unsigned int frameCols, bool loadFromResource)
+bool CSpriteFrameSheet::Load(const char* newSheetFileName, COLORREF maskColor, unsigned int frameRows, unsigned int frameCols, bool loadFromResource)
 //Load a sheet image from a file or resource
 {
     CImage sheetImg;
@@ -2192,7 +2194,7 @@ bool CSpriteFrameSheet::Load(const char* sheetFileName, COLORREF maskColor, unsi
     if((frameCols < 1) || (frameRows < 1))
         return false;
 
-    if(!sheetImg.Load(sheetFileName, loadFromResource))
+    if(!sheetImg.Load(newSheetFileName, loadFromResource))
         return false;
 
     Unload();
@@ -2212,6 +2214,7 @@ bool CSpriteFrameSheet::Load(const char* sheetFileName, COLORREF maskColor, unsi
     frameDefColor = SetBkColor(frameDC, maskColor);
 
     //Set frame dimensions
+    sheetFileName = newSheetFileName;
     frameCount = frameRows * frameCols;
     frameBMPList = new HBITMAP[frameCount];
     maskBMPList = new HBITMAP[frameCount];
@@ -2289,6 +2292,7 @@ void CSpriteFrameSheet::Init(void)
 //Initialize frame sheet properties
 {
     sheetName = "";
+    sheetFileName = "";
     frameBMPList = NULL;
     maskBMPList = NULL;
     frameCount = 0;
