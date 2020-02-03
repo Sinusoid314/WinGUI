@@ -2147,7 +2147,6 @@ void CImage::Unload(void)
 void CImage::Init(void)
 //Initialize image object properties
 {
-    imgName = "";
     imgFileName = "";
     imgHandle = NULL;
     imgWidth = 0;
@@ -2291,7 +2290,6 @@ void CSpriteFrameSheet::Unload(void)
 void CSpriteFrameSheet::Init(void)
 //Initialize frame sheet properties
 {
-    sheetName = "";
     sheetFileName = "";
     frameBMPList = NULL;
     maskBMPList = NULL;
@@ -2322,13 +2320,20 @@ CSprite::~CSprite(void)
 void CSprite::SetFrameSheet(CSpriteFrameSheet* newFrameSheetPtr)
 //
 {
-    if(newFrameSheetPtr == NULL)
-        return;
-
-    drawWidth = newFrameSheetPtr->frameWidth;
-    drawHeight = newFrameSheetPtr->frameHeight;
     frameSheetPtr = newFrameSheetPtr;
-    SetFrameRange(0, (frameSheetPtr->frameCount) - 1);
+
+    if(frameSheetPtr == NULL)
+    {
+        drawWidth = 0;
+        drawHeight = 0;
+        SetFrameRange(0, 0);
+    }
+    else
+    {
+        drawWidth = frameSheetPtr->frameWidth;
+        drawHeight = frameSheetPtr->frameHeight;
+        SetFrameRange(0, (frameSheetPtr->frameCount) - 1);
+    }
 }
 
 CSpriteFrameSheet* CSprite::GetFrameSheet(void)
@@ -2365,10 +2370,13 @@ void CSprite::GetFrameRange(unsigned int* currStartIndex, unsigned int* currEndI
 void CSprite::SetFrameRange(unsigned int newStartIndex, unsigned int newEndIndex)
 //Set a new frame range
 {
-    //Return if new range is out bounds
-    if((newStartIndex >= frameSheetPtr->frameCount) || (newEndIndex >= frameSheetPtr->frameCount))
+    if(frameSheetPtr != NULL)
     {
-        return;
+        //Return if new range is out bounds
+        if((newStartIndex >= frameSheetPtr->frameCount) || (newEndIndex >= frameSheetPtr->frameCount))
+        {
+            return;
+        }
     }
 
     startFrameIndex = min(newStartIndex, newEndIndex);

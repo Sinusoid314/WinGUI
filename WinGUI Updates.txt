@@ -1,5 +1,11 @@
 [v1.03]
 
+(February 2, 2020)
+	- Modified CSprite::SetFrameRange() to check for a NULL frameSheetPtr before checking the new range.
+	- Modified CSprite::SetFrameSheet() to clear the sprite's frame sheet data if given a NULL pointer.
+	- Modified CImage::Init() and CSpriteFrameSheet::Init() by removing the clearing of their
+	  respective name strings.
+
 (February 1, 2020)
 	- Added a property to CImage and CSpriteSheet that holds the file names of their images.
 
