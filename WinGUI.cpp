@@ -2317,7 +2317,7 @@ CSprite::~CSprite(void)
     DeleteDC(drawSrcDC);
 }
 
-void CSprite::SetFrameSheet(CSpriteFrameSheet* newFrameSheetPtr)
+void CSprite::SetFrameSheet(CSpriteFrameSheet* newFrameSheetPtr, bool setDrawSizeToFrameSize)
 //
 {
     frameSheetPtr = newFrameSheetPtr;
@@ -2330,8 +2330,11 @@ void CSprite::SetFrameSheet(CSpriteFrameSheet* newFrameSheetPtr)
     }
     else
     {
-        drawWidth = frameSheetPtr->frameWidth;
-        drawHeight = frameSheetPtr->frameHeight;
+        if(setDrawSizeToFrameSize)
+        {
+            drawWidth = frameSheetPtr->frameWidth;
+            drawHeight = frameSheetPtr->frameHeight;
+        }
         SetFrameRange(0, (frameSheetPtr->frameCount) - 1);
     }
 }
@@ -2401,11 +2404,13 @@ void CSprite::Draw(CDrawBox* dboxPtr, int offsetLeft, int offsetTop)
 
     if(isVisible)
     {
-        //Adjust the draw position to the mirror state and offset position
-        destLeft = drawLeft + (isMirroredX ? drawWidth : 0) + offsetLeft;
-        destTop = drawTop + (isMirroredY ? drawHeight : 0) + offsetTop;
-        destWidth = (isMirroredX ? -drawWidth : drawWidth);
-        destHeight = (isMirroredY ? -drawHeight : drawHeight);
+        //Adjust the draw position to the scaling, mirror state, and offset position.
+        destWidth = (isScaled ? (frameSheetPtr->frameWidth * scaleWidth) : drawWidth);
+        destHeight = (isScaled ? (frameSheetPtr->frameHeight * scaleHeight) : drawHeight);
+        destLeft = drawLeft + (isMirroredX ? destWidth : 0) + offsetLeft;
+        destTop = drawTop + (isMirroredY ? destHeight : 0) + offsetTop;
+        destWidth = (isMirroredX ? -destWidth : destWidth);
+        destHeight = (isMirroredY ? -destHeight : destHeight);
 
         //Draw the sprite frame with mask
         drawSrcDefBMP = (HBITMAP) SelectObject(drawSrcDC, frameSheetPtr->maskBMPList[currFrameIndex]);
@@ -2451,10 +2456,13 @@ void CSprite::Init(void)
     drawTop = 0;
     drawWidth = 0;
     drawHeight = 0;
+    scaleWidth = 1.0f;
+    scaleHeight = 1.0f;
     isVisible = true;
     isPlaying = true;
     isMirroredX = false;
     isMirroredY = false;
+    isScaled = false;
     drawsPerFrame = 1;
     maxCycles = 0;
     currCycle = 0;

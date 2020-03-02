@@ -434,10 +434,13 @@ class CSprite
     int drawTop;
     int drawWidth;
     int drawHeight;
+    float scaleWidth;
+    float scaleHeight;
     bool isVisible;
     bool isPlaying;
     bool isMirroredX;
     bool isMirroredY;
+    bool isScaled;
     unsigned int drawsPerFrame;
     unsigned int maxCycles;
     unsigned int currCycle;
@@ -447,7 +450,7 @@ class CSprite
     CSprite(CSpriteFrameSheet*);
     ~CSprite(void);
 
-    void SetFrameSheet(CSpriteFrameSheet*);
+    void SetFrameSheet(CSpriteFrameSheet*, bool setDrawSizeToFrameSize = true);
     CSpriteFrameSheet* GetFrameSheet(void);
     unsigned int GetCurrFrameIndex(void);
     void SetCurrFrameIndex(unsigned int);
