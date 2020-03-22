@@ -1,3 +1,5 @@
+- Add methods to write object data to file for CSpriteFameSheet and CSprite.
+
 - Menus
 
 
