@@ -2159,17 +2159,23 @@ CSpriteFrameSheet::CSpriteFrameSheet(void)
     Init();
 }
 
-CSpriteFrameSheet::CSpriteFrameSheet(const char* sheetFileName, COLORREF maskColor, unsigned int frameRows, unsigned int frameCols)
+CSpriteFrameSheet::CSpriteFrameSheet(const char* newSheetFileName, COLORREF maskColor, unsigned int frameRows, unsigned int frameCols)
 //Contruct frame sheet object from a given image file
 {
     Init();
-    Load(sheetFileName, maskColor, frameRows, frameCols);
+    Load(newSheetFileName, maskColor, frameRows, frameCols);
 }
 
 CSpriteFrameSheet::~CSpriteFrameSheet(void)
 //Delete current frame list (if any)
 {
     Unload();
+}
+
+bool CSpriteFrameSheet::WriteToFile(std::ofstream& fileObj)
+//
+{
+    return false;
 }
 
 bool CSpriteFrameSheet::Load(const char* newSheetFileName, COLORREF maskColor, unsigned int frameRows, unsigned int frameCols, bool loadFromResource)
@@ -2214,11 +2220,11 @@ bool CSpriteFrameSheet::Load(const char* newSheetFileName, COLORREF maskColor, u
 
     //Set frame dimensions
     sheetFileName = newSheetFileName;
+    frameWidth = sheetImg.imgWidth / frameCols;
+    frameHeight = sheetImg.imgHeight / frameRows;
     frameCount = frameRows * frameCols;
     frameBMPList = new HBITMAP[frameCount];
     maskBMPList = new HBITMAP[frameCount];
-    frameHeight = sheetImg.imgHeight / frameRows;
-    frameWidth = sheetImg.imgWidth / frameCols;
 
     //Loop through each frame in sheet image
     for(unsigned int currRow = 0; currRow < frameRows; currRow++)
@@ -2291,11 +2297,11 @@ void CSpriteFrameSheet::Init(void)
 //Initialize frame sheet properties
 {
     sheetFileName = "";
-    frameBMPList = NULL;
-    maskBMPList = NULL;
-    frameCount = 0;
     frameWidth = 0;
     frameHeight = 0;
+    frameCount = 0;
+    frameBMPList = NULL;
+    maskBMPList = NULL;
 }
 
 CSprite::CSprite(void)
@@ -2315,6 +2321,12 @@ CSprite::~CSprite(void)
 //Cleanup sprite resources
 {
     DeleteDC(drawSrcDC);
+}
+
+bool CSprite::WriteToFile(std::ofstream& fileObj)
+//
+{
+    return false;
 }
 
 void CSprite::SetFrameSheet(CSpriteFrameSheet* newFrameSheetPtr, bool setDrawSizeToFrameSize)

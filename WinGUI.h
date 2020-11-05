@@ -1,6 +1,5 @@
 //WinGUI Wrapper v1.03
 //Written by Andrew Sturges
-//July 2019
 
 #ifndef _WINGUI_H
 #define _WINGUI_H
@@ -10,6 +9,7 @@
 
 #include <string>
 #include <vector>
+#include <fstream>
 #include <windows.h>
 #include <commctrl.h>
 
@@ -407,16 +407,17 @@ class CSpriteFrameSheet
 
     std::string sheetName;
     std::string sheetFileName;
-    HBITMAP* frameBMPList;
-    HBITMAP* maskBMPList;
-    unsigned int frameCount;
     unsigned int frameWidth;
     unsigned int frameHeight;
+    unsigned int frameCount;
+    HBITMAP* frameBMPList;
+    HBITMAP* maskBMPList;
 
     CSpriteFrameSheet(void);
     CSpriteFrameSheet(const char*, COLORREF, unsigned int, unsigned int);
     ~CSpriteFrameSheet(void);
 
+    bool WriteToFile(std::ofstream&);
     bool Load(const char*, COLORREF, unsigned int, unsigned int, bool loadFromResource = false);
     void Unload(void);
 
@@ -450,6 +451,7 @@ class CSprite
     CSprite(CSpriteFrameSheet*);
     ~CSprite(void);
 
+    bool WriteToFile(std::ofstream&);
     void SetFrameSheet(CSpriteFrameSheet*, bool setDrawSizeToFrameSize = true);
     CSpriteFrameSheet* GetFrameSheet(void);
     unsigned int GetCurrFrameIndex(void);
