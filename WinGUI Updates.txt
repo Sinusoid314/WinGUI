@@ -1,5 +1,8 @@
 [v1.03]
 
+(August 6, 2024)
+	- Modified window classes to have COLOR_WINDOW as the background color.
+
 (February 29, 2020)
 	- Modified CSprite to allow the option to draw sprites by scaling the frame sheet images
           instead of using an absolute drawing size.

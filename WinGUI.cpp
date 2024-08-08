@@ -32,7 +32,7 @@ bool WinGUISetup(void)
     wincl.lpszMenuName = NULL;
     wincl.cbClsExtra = 0;
     wincl.cbWndExtra = 0;
-    wincl.hbrBackground = (HBRUSH) COLOR_3DFACE;
+    wincl.hbrBackground = (HBRUSH) COLOR_WINDOW; //COLOR_3DFACE
     if(!RegisterClassEx (&wincl))
     {
         return false;
@@ -1613,6 +1613,7 @@ CLabel::CLabel(void)
 CLabel::CLabel(CWindow* winParentPtr, const char* winText, int winX, int winY, int winWidth, int winHeight, DWORD winStyle, DWORD winExStyle)
 //Setup label control object and create its window
 {
+	//SS_WHITEFRAME
     Init();
     Create(winParentPtr, winText, winX, winY, winWidth, winHeight, winStyle, winExStyle);
 }
